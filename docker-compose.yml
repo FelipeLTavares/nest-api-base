@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: desenvolvimento
+      POSTGRES_PASSWORD: desenvolvimento
+      POSTGRES_DB: projeto
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - JWT_SECRET=secret
+      - JWT_EXPIRATION_TIME=1h
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USERNAME=desenvolvimento
+      - DB_PASSWORD=desenvolvimento
+      - DB_NAME=projeto
+      - DB_DIALECT=postgres
+
